@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { services } from '../config/pricing';
@@ -7,6 +7,11 @@ import ServiceCard from '../components/ServiceCard';
 export default function Services() {
   const navigate = useNavigate();
   const [selectedService, setSelectedService] = useState<string | null>(null);
+
+  // ✅ Scroll to top on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const furnitureServices = services.filter((s) => s.category === 'furniture');
   const itServices = services.filter((s) => s.category === 'it');

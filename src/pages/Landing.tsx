@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Hammer, Laptop, ArrowRight, ExternalLink, X } from 'lucide-react';
+import { Hammer, Laptop, ArrowRight, ExternalLink, X, Menu } from 'lucide-react';
 
 // ✅ Reviews data
 const reviews = [
@@ -24,6 +24,7 @@ const reviews = [
 export default function Landing() {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 relative">
@@ -32,7 +33,6 @@ export default function Landing() {
       {showProfile && (
         <div className="fixed inset-0 bg-black/40 flex items-start justify-center pt-24 z-50 transition-opacity duration-300 animate-fade-in">
           <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative text-center transform transition-transform duration-300 animate-slide-down">
-            
             <button
               onClick={() => setShowProfile(false)}
               className="absolute top-4 right-4 text-slate-500 hover:text-slate-900 transition-colors"
@@ -81,28 +81,67 @@ export default function Landing() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* NAV */}
-        <nav className="py-6 flex justify-between items-center">
+        <nav className="py-6 flex justify-between items-center relative">
+          {/* Logo */}
           <div className="flex items-center space-x-2">
             <Hammer className="w-8 h-8 text-slate-800" />
             <span className="text-2xl font-bold text-slate-900">HA Services</span>
           </div>
-          <div className="flex items-center space-x-4">
+
+          {/* Desktop Menu */}
+          <div className="hidden sm:flex items-center space-x-4">
             <button
               onClick={() => navigate('/portfolio')}
               className="px-4 py-2 text-slate-700 hover:text-slate-900 transition-colors font-medium"
             >
               Portfolio
             </button>
+
             <a
               href="https://www.taskrabbit.co.uk/profile/hisham-a--4?invitation_source=url"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 px-4 py-2 text-slate-700 hover:text-slate-900 transition-colors"
             >
-              <span className="hidden sm:inline">TaskRabbit</span>
+              <span>TaskRabbit</span>
               <ExternalLink className="w-4 h-4" />
             </a>
           </div>
+
+          {/* Mobile Hamburger */}
+          <div className="sm:hidden flex items-center">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-slate-900 focus:outline-none"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-lg p-4 flex flex-col gap-2 z-50">
+              <button
+                onClick={() => {
+                  navigate('/portfolio');
+                  setMobileMenuOpen(false);
+                }}
+                className="text-slate-900 text-left px-2 py-1 rounded hover:bg-slate-100 transition-colors"
+              >
+                Portfolio
+              </button>
+
+              <a
+                href="https://www.taskrabbit.co.uk/profile/hisham-a--4?invitation_source=url"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between text-slate-900 px-2 py-1 rounded hover:bg-slate-100 transition-colors"
+              >
+                <span>TaskRabbit</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          )}
         </nav>
 
         {/* HERO */}
