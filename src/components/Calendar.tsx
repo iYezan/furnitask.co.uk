@@ -17,19 +17,16 @@ export default function Calendar({
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
 
-  // Days in current month
   const daysInMonth = useMemo(
     () => new Date(currentYear, currentMonth + 1, 0).getDate(),
     [currentYear, currentMonth]
   );
 
-  // First day of month
   const startDay = useMemo(
     () => new Date(currentYear, currentMonth, 1).getDay(),
     [currentYear, currentMonth]
   );
 
-  // Generate calendar grid
   const calendarDays = useMemo(() => {
     const days: (Date | null)[] = [];
     for (let i = 0; i < startDay; i++) days.push(null);
@@ -38,9 +35,8 @@ export default function Calendar({
     return days;
   }, [startDay, daysInMonth, currentYear, currentMonth]);
 
-  // Month navigation
   const handlePrevMonth = () => {
-    if (currentYear === today.getFullYear() && currentMonth === today.getMonth()) return; // cannot go to past
+    if (currentYear === today.getFullYear() && currentMonth === today.getMonth()) return;
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear((y) => y - 1);
@@ -64,7 +60,7 @@ export default function Calendar({
   ];
 
   return (
-    <div className="w-full bg-white rounded-xl p-3 shadow-sm">
+    <div className="w-full bg-slate-50 rounded-xl p-3 shadow-sm">
       {/* Month Navigation */}
       <div className="flex justify-between items-center mb-2">
         <button
@@ -106,11 +102,12 @@ export default function Calendar({
               key={idx}
               disabled={isDisabled}
               onClick={() => onSelectDate(date)}
-              className={`w-10 h-10 m-1 flex items-center justify-center rounded-full transition-colors
-                ${isDisabled ? 'text-slate-300 bg-white cursor-not-allowed' : 'text-slate-900 hover:bg-slate-200'}
+              className={`
+                w-10 h-10 m-1 flex items-center justify-center rounded-full transition-colors
+                ${isDisabled ? 'text-slate-300 bg-slate-50 cursor-not-allowed' : 'text-slate-900 hover:bg-slate-200'}
                 ${isSelected ? 'bg-slate-900 text-white font-bold' : ''}
                 ${highlightWeekends && isWeekend && !isSelected && !isDisabled ? 'bg-slate-100 font-semibold' : ''}
-                `}
+              `}
               style={{ WebkitAppearance: 'none' }}
             >
               {date.getDate()}
