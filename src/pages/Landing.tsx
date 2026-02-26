@@ -1,30 +1,32 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Hammer, Laptop, ArrowRight, ExternalLink, X, Menu } from 'lucide-react';
 
 // ✅ Reviews data
 const reviews = [
-  {
-    name: 'Alice M.',
-    review: 'Hisham assembled my IKEA wardrobe perfectly. Highly recommended!',
-    rating: 5,
-  },
-  {
-    name: 'John D.',
-    review: 'Professional IT support, fixed my network issues quickly.',
-    rating: 5,
-  },
-  {
-    name: 'Sophie K.',
-    review: 'Reliable, on-time, and very polite. Excellent service!',
-    rating: 5,
-  },
+  { name: 'Alice M.', review: 'Hisham assembled my IKEA wardrobe perfectly. Highly recommended!', rating: 5 },
+  { name: 'John D.', review: 'Professional IT support, fixed my network issues quickly.', rating: 5 },
+  { name: 'Sophie K.', review: 'Reliable, on-time, and very polite. Excellent service!', rating: 5 },
 ];
 
 export default function Landing() {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Ref for mobile menu
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (mobileMenuOpen && mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [mobileMenuOpen]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 relative">
@@ -41,15 +43,9 @@ export default function Landing() {
               <X className="w-5 h-5" />
             </button>
 
-            <img
-              src="/images/Photo_ID.jpg"
-              alt="Hisham"
-              className="w-28 h-28 rounded-full object-cover mx-auto mb-4 shadow-lg"
-            />
-
+            <img src="/images/Photo_ID.jpg" alt="Hisham" className="w-28 h-28 rounded-full object-cover mx-auto mb-4 shadow-lg" />
             <h3 className="text-xl font-bold text-slate-900">Hisham</h3>
             <p className="text-sm text-slate-600 mb-4">Professional Technician</p>
-
             <p className="text-sm text-slate-600 leading-relaxed mb-6">
               5+ years of experience in furniture assembly and IT support, specializing in IKEA flat-pack assembly, hardware setup, and network configuration.
             </p>
@@ -120,7 +116,10 @@ export default function Landing() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-lg p-4 flex flex-col gap-2 z-50">
+            <div
+              ref={mobileMenuRef}
+              className="absolute top-16 right-4 w-48 bg-white shadow-lg rounded-lg p-4 flex flex-col gap-2 z-50"
+            >
               <button
                 onClick={() => {
                   navigate('/portfolio');
@@ -300,7 +299,6 @@ export default function Landing() {
           }
         `}
       </style>
-
     </div>
   );
 }
