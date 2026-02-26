@@ -60,28 +60,28 @@ export default function Calendar({
   ];
 
   return (
-    <div className="w-full bg-slate-50 rounded-xl p-2 sm:p-3 shadow-sm">
+    <div className="w-full bg-slate-50 dark:bg-slate-800 rounded-xl p-2 sm:p-3 shadow-sm">
       {/* Month Navigation */}
       <div className="flex justify-between items-center mb-2">
         <button
           onClick={handlePrevMonth}
-          className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-200 hover:bg-slate-300"
+          className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
         >
           ◀
         </button>
-        <span className="font-semibold text-slate-900 text-sm sm:text-base">
+        <span className="font-semibold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
           {monthNames[currentMonth]} {currentYear}
         </span>
         <button
           onClick={handleNextMonth}
-          className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-200 hover:bg-slate-300"
+          className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
         >
           ▶
         </button>
       </div>
 
       {/* Weekdays */}
-      <div className="grid grid-cols-7 text-center font-semibold text-slate-600 mb-1 text-xs sm:text-sm">
+      <div className="grid grid-cols-7 text-center font-semibold text-slate-600 dark:text-slate-300 mb-1 text-xs sm:text-sm">
         {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map((d) => (
           <div key={d}>{d}</div>
         ))}
@@ -104,11 +104,17 @@ export default function Calendar({
               onClick={() => onSelectDate(date)}
               className={`
                 w-8 h-8 sm:w-10 sm:h-10 m-0.5 sm:m-1 flex items-center justify-center rounded-full transition-colors
-                ${isDisabled ? 'text-slate-300 bg-slate-50 cursor-not-allowed' : 'text-slate-900 hover:bg-slate-200'}
-                ${isSelected ? 'bg-slate-900 text-white font-bold border-2 border-slate-800' : ''}
-                ${highlightWeekends && isWeekend && !isSelected && !isDisabled ? 'bg-slate-100 font-semibold' : ''}
+                ${isDisabled 
+                  ? 'text-slate-300 bg-slate-50 dark:text-slate-500 dark:bg-slate-700 cursor-not-allowed'
+                  : 'text-slate-900 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-600'}
+                ${isSelected 
+                  ? 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-bold border-2 border-slate-800 dark:border-sky-600' 
+                  : ''}
+                ${highlightWeekends && isWeekend && !isSelected && !isDisabled 
+                  ? 'bg-slate-100 dark:bg-slate-700 font-semibold' 
+                  : ''}
               `}
-              style={{ WebkitAppearance: 'none', backgroundColor: isSelected ? '#1e293b' : undefined }}
+              style={{ WebkitAppearance: 'none' }}
             >
               {date.getDate()}
             </button>
