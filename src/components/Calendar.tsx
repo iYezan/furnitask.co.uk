@@ -60,35 +60,35 @@ export default function Calendar({
   ];
 
   return (
-    <div className="w-full bg-slate-50 rounded-xl p-3 shadow-sm">
+    <div className="w-full bg-slate-50 rounded-xl p-2 sm:p-3 shadow-sm">
       {/* Month Navigation */}
       <div className="flex justify-between items-center mb-2">
         <button
           onClick={handlePrevMonth}
-          className="px-3 py-1 rounded-full bg-slate-200 hover:bg-slate-300"
+          className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-200 hover:bg-slate-300"
         >
           ◀
         </button>
-        <span className="font-semibold text-slate-900">
+        <span className="font-semibold text-slate-900 text-sm sm:text-base">
           {monthNames[currentMonth]} {currentYear}
         </span>
         <button
           onClick={handleNextMonth}
-          className="px-3 py-1 rounded-full bg-slate-200 hover:bg-slate-300"
+          className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-slate-200 hover:bg-slate-300"
         >
           ▶
         </button>
       </div>
 
       {/* Weekdays */}
-      <div className="grid grid-cols-7 text-center font-semibold text-slate-600 mb-1">
+      <div className="grid grid-cols-7 text-center font-semibold text-slate-600 mb-1 text-xs sm:text-sm">
         {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map((d) => (
           <div key={d}>{d}</div>
         ))}
       </div>
 
       {/* Calendar Grid */}
-      <div className="grid grid-cols-7 gap-1 text-center">
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1 text-center">
         {calendarDays.map((date, idx) => {
           if (!date) return <div key={idx}></div>;
 
@@ -103,9 +103,9 @@ export default function Calendar({
               disabled={isDisabled}
               onClick={() => onSelectDate(date)}
               className={`
-                w-10 h-10 m-1 flex items-center justify-center rounded-full transition-colors
+                w-8 h-8 sm:w-10 sm:h-10 m-0.5 sm:m-1 flex items-center justify-center rounded-full transition-colors
                 ${isDisabled ? 'text-slate-300 bg-slate-50 cursor-not-allowed' : 'text-slate-900 hover:bg-slate-200'}
-                ${isSelected ? 'bg-slate-900 text-white font-bold' : ''}
+                ${isSelected ? 'bg-slate-900 text-white font-bold border-2 border-slate-800' : ''}
                 ${highlightWeekends && isWeekend && !isSelected && !isDisabled ? 'bg-slate-100 font-semibold' : ''}
               `}
               style={{ WebkitAppearance: 'none' }}
