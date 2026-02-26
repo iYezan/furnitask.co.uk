@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------
+   FORCE LIGHT MODE
+------------------------ */
+html {
+  scroll-behavior: smooth;
+  color-scheme: light; /* ensures browser UI like scrollbars and form inputs stay light */
+  background-color: white; /* default background for light mode */
+}
+
+body {
+  background-color: white; /* ensures body is always light */
+}
+
+/* ------------------------
+   ANIMATIONS & UTILITIES
+------------------------ */
 @layer utilities {
   @keyframes fade-in {
     from {
@@ -77,6 +93,9 @@
   }
 }
 
+/* ------------------------
+   BASE STYLES
+------------------------ */
 @layer base {
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -84,9 +103,6 @@
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: #1e293b; /* text default slate-900 color */
   }
-}
-
-html {
-  scroll-behavior: smooth;
 }

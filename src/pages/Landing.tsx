@@ -2,6 +2,25 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Hammer, Laptop, ArrowRight, ExternalLink, X } from 'lucide-react';
 
+// ✅ Reviews data
+const reviews = [
+  {
+    name: 'Alice M.',
+    review: 'Hisham assembled my IKEA wardrobe perfectly. Highly recommended!',
+    rating: 5,
+  },
+  {
+    name: 'John D.',
+    review: 'Professional IT support, fixed my network issues quickly.',
+    rating: 5,
+  },
+  {
+    name: 'Sophie K.',
+    review: 'Reliable, on-time, and very polite. Excellent service!',
+    rating: 5,
+  },
+];
+
 export default function Landing() {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
@@ -90,7 +109,6 @@ export default function Landing() {
         <section className="py-16 sm:py-24 text-center">
           <div className="max-w-4xl mx-auto">
 
-            {/* Badge + optional profile button */}
             <div className="inline-flex flex-col items-center mb-8">
               <div className="inline-flex items-center space-x-2 px-4 py-2 bg-slate-900 text-white rounded-full text-sm">
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
@@ -159,7 +177,40 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* BOOK A SERVICE SECTION - INLINE */}
+        {/* REVIEWS */}
+        <section className="py-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center mb-8">
+            What Our Clients Say
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {reviews.slice(0, 3).map((r, i) => (
+              <div
+                key={i}
+                className={`bg-white p-6 rounded-2xl shadow-md flex flex-col justify-between min-h-[180px] opacity-0 animate-fade-in transform transition duration-700 hover:scale-105 hover:shadow-lg`}
+                style={{ animationDelay: `${i * 400}ms` }}
+              >
+                <div className="mb-2">
+                  <div className="flex items-center mb-2">
+                    {Array.from({ length: r.rating }).map((_, idx) => (
+                      <svg
+                        key={idx}
+                        className="w-4 h-4 text-yellow-400 mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.962a1 1 0 00.95.69h4.165c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.962c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.838-.197-1.539-1.118l1.286-3.962a1 1 0 00-.364-1.118L2.038 9.39c-.783-.57-.38-1.81.588-1.81h4.165a1 1 0 00.95-.69l1.286-3.962z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm text-slate-600">{r.review}</p>
+                </div>
+                <p className="mt-2 text-xs font-semibold text-slate-900">{r.name}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* BOOK A SERVICE */}
         <section className="py-12 text-center animate-fade-in-delay-6">
           <div className="bg-slate-900 rounded-2xl p-8 sm:p-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
@@ -192,8 +243,8 @@ export default function Landing() {
       <style>
         {`
           @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
           }
 
           @keyframes slideDown {
@@ -202,7 +253,7 @@ export default function Landing() {
           }
 
           .animate-fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
+            animation: fadeIn 0.8s ease-out forwards;
           }
 
           .animate-slide-down {
