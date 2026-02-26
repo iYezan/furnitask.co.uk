@@ -33,8 +33,14 @@ export default function Landing() {
 
       {/* PROFILE POPUP */}
       {showProfile && (
-        <div className="fixed inset-0 bg-black/40 flex items-start justify-center pt-24 z-50 transition-opacity duration-300 animate-fade-in">
-          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative text-center transform transition-transform duration-300 animate-slide-down">
+        <div
+          onClick={() => setShowProfile(false)}   // ✅ close when tapping background
+          className="fixed inset-0 bg-black/40 flex items-start justify-center pt-24 z-50 transition-opacity duration-300 animate-fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}   // ✅ prevent closing when clicking inside popup
+            className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative text-center transform transition-transform duration-300 animate-slide-down"
+          >
             <button
               onClick={() => setShowProfile(false)}
               className="absolute top-4 right-4 text-slate-500 hover:text-slate-900 transition-colors"
@@ -43,11 +49,19 @@ export default function Landing() {
               <X className="w-5 h-5" />
             </button>
 
-            <img src="/images/Photo_ID.jpg" alt="Hisham" className="w-28 h-28 rounded-full object-cover mx-auto mb-4 shadow-lg" />
+            <img
+              src="/images/Photo_ID.jpg"
+              alt="Hisham"
+              className="w-28 h-28 rounded-full object-cover mx-auto mb-4 shadow-lg"
+            />
+
             <h3 className="text-xl font-bold text-slate-900">Hisham</h3>
             <p className="text-sm text-slate-600 mb-4">Professional Technician</p>
+
             <p className="text-sm text-slate-600 leading-relaxed mb-6">
-              5+ years of experience in furniture assembly and IT support, specializing in IKEA flat-pack assembly, hardware setup, and network configuration.
+              5+ years of experience in furniture assembly and IT support,
+              specializing in IKEA flat-pack assembly, hardware setup,
+              and network configuration.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -58,16 +72,6 @@ export default function Landing() {
                 <span>Book a Service</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
-
-              <a
-                href="https://www.taskrabbit.co.uk/profile/hisham-a--4?invitation_source=url"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 py-3 bg-white border-2 border-slate-300 text-slate-900 rounded-lg font-semibold text-sm hover:border-slate-900 transition-all duration-300 flex items-center justify-center space-x-2"
-              >
-                <span>TaskRabbit</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
             </div>
           </div>
         </div>
@@ -147,7 +151,7 @@ export default function Landing() {
         <section className="py-16 sm:py-24 text-center">
           <div className="max-w-4xl mx-auto">
 
-            <div className="inline-flex flex-col items-center mb-8">
+            <div className="inline-flex flex-col items-center mb-8 animate-fade-in">
               <div className="inline-flex items-center space-x-2 px-4 py-2 bg-slate-900 text-white rounded-full text-sm">
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                 <span>Available Across London</span>
