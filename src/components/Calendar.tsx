@@ -108,7 +108,7 @@ export default function Calendar({
                 ${isSelected ? 'bg-slate-900 text-white font-bold border-2 border-slate-800' : ''}
                 ${highlightWeekends && isWeekend && !isSelected && !isDisabled ? 'bg-slate-100 font-semibold' : ''}
               `}
-              style={{ WebkitAppearance: 'none' }}
+              style={{ WebkitAppearance: 'none', backgroundColor: isSelected ? '#1e293b' : undefined }}
             >
               {date.getDate()}
             </button>
