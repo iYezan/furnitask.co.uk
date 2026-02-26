@@ -18,7 +18,6 @@ export default function Booking() {
     return null;
   }
 
-  // ✅ Use availability from config
   const allowedDays = AVAILABLE_DAYS[service.category] || [0,1,2,3,4,5,6];
 
   const handleBooking = () => {
@@ -31,7 +30,6 @@ export default function Booking() {
       day: 'numeric'
     });
 
-    // ✅ Professional WhatsApp message
     const message = `Hi, I would like to book a service:
 
 Service: ${service.name}
@@ -47,7 +45,6 @@ I look forward to your confirmation.`;
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <div className="max-w-5xl mx-auto px-4 py-8">
 
-        {/* Back Button */}
         <button
           onClick={() => navigate('/services')}
           className="flex items-center space-x-2 text-slate-600 hover:text-slate-900 mb-8"
@@ -56,7 +53,6 @@ I look forward to your confirmation.`;
           <span>Back to Services</span>
         </button>
 
-        {/* Service Info & Calendar */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
           <div className="mb-6 p-4 bg-slate-50 rounded-xl">
             <h3 className="text-xs font-semibold text-slate-600 uppercase mb-1">
@@ -74,7 +70,6 @@ I look forward to your confirmation.`;
           />
         </div>
 
-        {/* Booking Button & Note */}
         <div className="flex flex-col items-center pb-8">
           <button
             onClick={handleBooking}
@@ -88,7 +83,6 @@ I look forward to your confirmation.`;
             Book via WhatsApp
           </button>
 
-          {/* ✅ Larger, more readable confirmation note */}
           <p className="text-sm text-slate-600 mt-3 text-center max-w-xs">
             You’ll be contacted within a few hours to confirm your booking.
           </p>

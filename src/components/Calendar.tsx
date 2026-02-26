@@ -3,13 +3,15 @@ import { useState, useMemo } from 'react';
 interface CalendarProps {
   selectedDate: Date | null;
   onSelectDate: (date: Date) => void;
-  allowedDays: number[];       // days that are available
+  allowedDays: number[];
+  highlightWeekends?: boolean;
 }
 
 export default function Calendar({
   selectedDate,
   onSelectDate,
   allowedDays,
+  highlightWeekends = true,
 }: CalendarProps) {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
@@ -31,13 +33,14 @@ export default function Calendar({
   const calendarDays = useMemo(() => {
     const days: (Date | null)[] = [];
     for (let i = 0; i < startDay; i++) days.push(null);
-    for (let d = 1; d <= daysInMonth; d++) days.push(new Date(currentYear, currentMonth, d));
+    for (let d = 1; d <= daysInMonth; d++)
+      days.push(new Date(currentYear, currentMonth, d));
     return days;
   }, [startDay, daysInMonth, currentYear, currentMonth]);
 
   // Month navigation
   const handlePrevMonth = () => {
-    if (currentYear === today.getFullYear() && currentMonth === today.getMonth()) return;
+    if (currentYear === today.getFullYear() && currentMonth === today.getMonth()) return; // cannot go to past
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear((y) => y - 1);
@@ -61,7 +64,7 @@ export default function Calendar({
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-white rounded-xl p-3 shadow-sm">
       {/* Month Navigation */}
       <div className="flex justify-between items-center mb-2">
         <button
@@ -96,7 +99,7 @@ export default function Calendar({
           const isPast = date < today;
           const isDisabled = isPast || !allowedDays.includes(date.getDay());
           const isSelected = selectedDate?.toDateString() === date.toDateString();
-          const isAvailable = allowedDays.includes(date.getDay()) && !isPast;
+          const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
           return (
             <button
@@ -104,10 +107,11 @@ export default function Calendar({
               disabled={isDisabled}
               onClick={() => onSelectDate(date)}
               className={`w-10 h-10 m-1 flex items-center justify-center rounded-full transition-colors
-                ${isDisabled ? 'text-slate-300' : 'text-slate-900 hover:bg-slate-200'}
-                ${isSelected ? 'bg-slate-900 text-white' : ''}
-                ${isAvailable && !isSelected ? 'bg-slate-100 font-semibold' : ''}
-              `}
+                ${isDisabled ? 'text-slate-300 bg-white cursor-not-allowed' : 'text-slate-900 hover:bg-slate-200'}
+                ${isSelected ? 'bg-slate-900 text-white font-bold' : ''}
+                ${highlightWeekends && isWeekend && !isSelected && !isDisabled ? 'bg-slate-100 font-semibold' : ''}
+                `}
+              style={{ WebkitAppearance: 'none' }}
             >
               {date.getDate()}
             </button>
