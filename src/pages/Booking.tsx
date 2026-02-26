@@ -30,12 +30,16 @@ export default function Booking() {
       day: 'numeric'
     });
 
-    const message = `Hi, I would like to book a service.
+    const message = `Hi,
+
+I would like to book the following service:
 
 Service: ${service.name}
 Date: ${formattedDate}
 
-Thank you for choosing HA Services. We usually respond within a few hours to confirm your booking.`;
+Please confirm the booking.
+
+Thank you.`;
 
     const whatsappUrl = `https://wa.me/447307296705?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
